@@ -1,4 +1,4 @@
 ### Hello there 👋
-My name is Alon Presman and I'm an Ethical hacker and CTF player in THM and HTB.
+My name is Alon Presman, Ethical hacker and CTF player on THM and HTB platforms.
 I'll share here CTFs writeups.
 
