@@ -1,4 +1,4 @@
-# Hack the box: Cap writeup
+# Hack The Box: Cap writeup
 ### Difficulty level: Easy
 --------------------------------------
  First of all, let’s add the target machine IP address to /etc/hosts file.
