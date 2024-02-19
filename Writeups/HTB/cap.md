@@ -3,9 +3,8 @@
 --------------------------------------
  First of all, let’s add the target machine IP address to /etc/hosts file.
   
-  ///
-  echo '10.10.10.245 cap.htb' >> /etc/hosts
-  ///
+ /// echo '10.10.10.245 cap.htb' >> /etc/hosts ///
+  
 
   The next step will be nmap scan. Let's write the results inato a nmap.txt file.
 
