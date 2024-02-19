@@ -2,15 +2,18 @@
 ### Difficulty level: Easy
 --------------------------------------
  First of all, let’s add the target machine IP address to /etc/hosts file.
+ 
  ```bash 
- echo '*IP-ADDRESS* cap.htb' >> /etc/hosts
+ echo '<IP-address> cap.htb' >> /etc/hosts
  ```
   
 
   The next step will be nmap scan. Let's write the results inato a nmap.txt file.
 
-  nmap -p- -sC -sV *IP-address* > nmap.txt
-
+  ```bash
+  nmap -p- -sC -sV <IP-address> > nmap.txt
+  ```
+  
   nmap resuls:
 
 That machine has 3 open ports:
@@ -36,11 +39,12 @@ many files there are, the results were 4 files. With changing the value to 0, 1,
 3 different files. When changing the value to number 3 and above that, the app leads us back
 to the home dashboard. Let’s inspect all those 3 files with WIRESHARK.
 
-    /// Educational anecdote ///
+```bash
+Educational anecdote
 Generally, this is an IDOR vulnerability cause we got access to security dashboard of one of
 the regular user that his name is Nathan. This account actually gets an access to network
 traffic of other users (every file gives information about different IP’S).
-
+```
 Let’s inspect file “0.pcap”
 
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*qla9pygxgh_pOGgv65oGgw.png)
