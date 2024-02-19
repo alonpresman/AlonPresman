@@ -1,4 +1,4 @@
-# Expose
+# Expose | THM
 ### Difficulty level: Easy
 ------------------------------------------
 
