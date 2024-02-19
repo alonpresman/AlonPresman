@@ -192,7 +192,7 @@ Check the path that is written inside the database:
 ```
 
 There is password input. So grab the hash inside the database that 
-relates to this URL and decode it.
+relates to this URL and crack it.
 
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*782iOq78eGYoetCXzK98sQ.png)
 
