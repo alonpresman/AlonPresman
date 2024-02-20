@@ -1,4 +1,4 @@
-# Wekor | THNM
+# Wekor | THM
 ### Difficulty: Medium
 -----------------------------------
 
