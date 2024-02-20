@@ -8,6 +8,7 @@ Firstly, I’ll start with nmap tool for enumeration.
 ```
 
 Results:
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*FMjt7TYKLOmhgXswDFD_GQ.png)
 
 There is 1 open port. This is http port and we get a http title : “welcome to FUEL CMS”.
@@ -54,6 +55,7 @@ and a netcat listener on our machine on the same port.
 nc -lnvp 2222
 ```
 then we got the wanted reverse shell.
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*sei0zW2PoLyl5t28_uw3wg.png)
 
 So the first command will be:
@@ -75,6 +77,7 @@ cat /var/www/html/fuel/application/config/database.php
 ```
 
 Results:
+
 ![image](https://miro.medium.com/v2/resize:fit:786/format:webp/1*27WqwtFZz_1O6bI3E3yfzg.png)
 
 So, It's time to root.
@@ -83,6 +86,7 @@ su root
 ```
 
 Enter the password and move to /root dir and there is the root.txt flag!
+
 ![image](https://miro.medium.com/v2/resize:fit:786/format:webp/1*OiJYtpCw6ZhYjan2tPm9MQ.png)
 
 The end.
