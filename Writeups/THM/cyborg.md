@@ -87,6 +87,7 @@ borg mount home/field/dev/final_archive cyborg
 ```
 
 next step -move to the archive and find note.txt
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*ps6dIAkcIMaZNJlUZa2e6g.png)
 
 whoop whoop! now it’s the time for ssh connection!
@@ -94,6 +95,7 @@ whoop whoop! now it’s the time for ssh connection!
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*OltDqVXEDUvn52Az7vVwVQ.png)
 
 and we got user.txt
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*rdTkOwojsycfa-CjVtwNgg.png)
 
 *privilege escalation*
