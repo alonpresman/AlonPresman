@@ -18,6 +18,7 @@ I can do nothing with that so lets gobuster to find directories in this host.
 gobuster dir -u <ip-address> -w <path/to/wordlist>
 ```
 This is the output:
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*A9R6Z8v3P9u-2UWvnJylnQ.png)
 
 I’m going to enter admin directory and I got a site.
