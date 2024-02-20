@@ -25,9 +25,11 @@ I’m going to enter admin directory and I got a site.
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*y3DIFGTkrI0LBD_394vAVw.png)
 
 and now let’s check the etc directory.
+
 ![image](https://miro.medium.com/v2/resize:fit:640/format:webp/1*QeGI3049xLKv_f3BZoaj1A.png)
 
 There is a file “passwd” in squid directory and when opened it I saw those credentials.
+
 ![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*pCObv6cY_YERMc-k5gL9Tw.png)
 
 Grab the hash:
