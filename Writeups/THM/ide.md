@@ -98,7 +98,19 @@ ftp anonymous@10.10.36.144
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*MVloOCGmve8YyXK4X_TTDQ.png)
 
-As we can see, there is nothing. At least there is easy way to upload scripts and files to this machine with "push" command.
+As we can see, there is a file. Let's get it.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*cMiKCn9e597HB3EliUrSGQ.png)
+
+There is a message:
+
+```
+Hey john,
+I have reset the password as you have asked. Please use the default password to login. 
+Also, please take care of the image file ;)
+- drac.
+```
+
 Let's move on to the browser and see what is the results of port 80.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*Hrz8Xm3kkwlF9JzIOuw9bw.png)
