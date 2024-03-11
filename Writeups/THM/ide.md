@@ -17,7 +17,7 @@ nmap -p- -T4 -A -sC -sV  10.10.36.144 -oN nmap.txt
 -sV - Services version.
 -oN - Saves the output into a file.
 
-```
+```bash
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-11 16:07 EDT
 Nmap scan report for 10.10.36.144
 Host is up (0.11s latency).
@@ -83,9 +83,38 @@ There are 4 open ports:
 
 Start with FTP. There is Anonymous FTP login which means entry to FTP server without any credentials.
 
-```
+```bash
 ftp anonymous@10.10.36.144
 ```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*MVloOCGmve8YyXK4X_TTDQ.png)
+
+As we can see, there is nothing. At least there is easy way to upload scripts and files to this machine with "push" command.
+Let's move on to the browser and see what is the results of port 80.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*Hrz8Xm3kkwlF9JzIOuw9bw.png)
+
+There is apache default page. On other cases, I used to keep scanning it with gobuster to enumarate other directories on the system.
+But there is another port that runs HTTP service on it so let's check it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
