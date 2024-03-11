@@ -10,12 +10,17 @@ First, nmap scan to enumarate the system and save the output into a file:
 nmap -p- -T4 -A -sC -sV  10.10.36.144 -oN nmap.txt
 ```
 
--p- Which means scan all ports instead of the 1000 common ports. \n
--T4 - Controls the timing of the scan. On that case, level 4 to make it aggresive and fast. \n
--A - Aggresive scan. \n
--sC - Deafult nmap script. \n
--sV - Services version. \n
--oN - Saves the output into a file. \n
+-p- Which means scan all ports instead of the 1000 common ports.
+
+-T4 - Controls the timing of the scan. On that case, level 4 to make it aggresive and fast.   
+
+-A - Aggresive scan. 
+
+-sC - Deafult nmap script. 
+
+-sV - Services version. 
+
+-oN - Saves the output into a file. 
 
 ```bash
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-11 16:07 EDT
@@ -76,9 +81,13 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 488.51 seconds
 ```
 There are 4 open ports:
+
 21 - FTP
+
 22 - SSH
+
 80 - HTTP
+
 62337 - HTTP 
 
 Start with FTP. There is Anonymous FTP login which means entry to FTP server without any credentials.
