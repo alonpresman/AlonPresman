@@ -10,12 +10,12 @@ First, nmap scan to enumarate the system and save the output into a file:
 nmap -p- -T4 -A -sC -sV  10.10.36.144 -oN nmap.txt
 ```
 
--p- Which means scan all ports instead of the 1000 common ports.
--T4 - Controls the timing of the scan. On that case, level 4 to make it aggresive and fast.
--A - Aggresive scan.
--sC - Deafult nmap script.
--sV - Services version.
--oN - Saves the output into a file.
+-p- Which means scan all ports instead of the 1000 common ports. \n
+-T4 - Controls the timing of the scan. On that case, level 4 to make it aggresive and fast. \n
+-A - Aggresive scan. \n
+-sC - Deafult nmap script. \n
+-sV - Services version. \n
+-oN - Saves the output into a file. \n
 
 ```bash
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-11 16:07 EDT
