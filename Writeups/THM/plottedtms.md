@@ -83,7 +83,7 @@ It's the time to use gobuster to scan for any directory that runs on the system.
 gobuster dir -u http://<machine-ip> -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
 
-dir - Tells gobuster to commit the directories scan.
+dir - Tells gobuster to commit directories scan.
 
 -u - append to it the host-address.
 
@@ -144,8 +144,45 @@ It looks like a legitimate web page.
 
  After a quick testing I found login page:
 
- 
  ![image](https://cdn-images-1.medium.com/max/1000/1*AYE1p8mrobfaNKZrlyvIQQ.png)
+
+
+After quick check on google for any default credentials, the first link that appeared was an exploit-db that 
+tells about an exploit.
+Let's grab the exploit and try it:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*Fxc72LELFs11WPx-AJkAog.png)
+
+I tried it but it doesn't work so i decide to read the script to understand what is all about.
+After reading it I saw a payload that relates to sql injection to bypass login page so i tried it manually on
+the login page:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*qqLF5ylLJ1Yfs9NRJYCGvg.png)
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*wBYEpIln-KAMzpfgO5q-1g.png)
+
+```
+admin' or '1'='1'#
+
+this payload is tautology SQLi that inject code which is always true. So, the data base checks all the usernames within the
+db, and this query manipulate the db to use username without really knowing it. the "#" sign is used to "cut" the query at the point that is appeard.
+
+the full query looks like:
+SELECT * FROM users where username="admin' or '1'='1'# " AND password = "";
+ To summ it up:
+The db is manipulated by the query to use the first username within it and the part of the password isn't checked at all by the db cause there is "#" sign that stops the db from checking if the password is correct or not.
+```
+
+WE got the administrator dashbord which means that we can do anything we want to.
+
+
+
+
+  
+
+
+
 
 
 
