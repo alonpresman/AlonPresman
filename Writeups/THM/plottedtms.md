@@ -181,7 +181,69 @@ We got the administrator dashbord which means we can do anything we want to.
 
 So, I thought about getting reverse shell but without any knowledge where to upload it. Hence, I decided to use gobuster again to find any webpages within the system that I have the ability to upload any script to it. Gobuster found /upload directory, which that sounds like a good place to work with.
 
-I'll try to upload it throught the drivers directory by adding a new driver to the system and upload the script there.
+I'll try to upload it throught the drivers directory by creating a new driver to the system and upload the script there.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*hp0FexFk-BJlt_XUhq1O6A.png)
+
+
+Let's check if the script was uploaded succesfully:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*WESPFnidiSnvquhLOoGkwg.png)
+
+Yes, it is.
+
+On your machine set netcat listener:
+
+```
+nc -lnvp 2222
+```
+
+click on the script to run it and there is a shell:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*0x6vEKoU-zJ1kGue6VBimw.png)
+
+
+and this command will stabilize the shell:
+
+```
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+```
+
+Let's find out user.txt flag
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*CJG14z24nI7Z-7TLRnRdfg.png)
+
+we need to find a way to be the user that owns the file to read it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
