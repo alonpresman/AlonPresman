@@ -166,7 +166,7 @@ the login page:
 admin' or '1'='1'#
 
 this payload is tautology SQLi that inject code which is always true. So, the data base checks all the usernames within the
-db, and this query manipulate the db to use username without really knowing it. the "#" sign is used to "cut" the query at the point that is appeard.
+db, and this query manipulate the db to use username without any knowledge about it can be. the "#" sign is used to "cut" the query at the point that is appeard.
 
 the full query looks like:
 SELECT * FROM users where username="admin' or '1'='1'# " AND password = "";
@@ -174,12 +174,20 @@ SELECT * FROM users where username="admin' or '1'='1'# " AND password = "";
 The db is manipulated by the query to use the first username within it and the part of the password isn't checked at all by the db cause there is "#" sign that stops the db from checking if the password is correct or not.
 ```
 
-WE got the administrator dashbord which means that we can do anything we want to.
+We got the administrator dashbord which means we can do anything we want to.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*V9xNOKEPBERpCA6c0BBvaw.png)
+
+
+So, I thought about getting reverse shell but without any knowledge where to upload it. Hence, I decided to use gobuster again to find any webpages within the system that I have the ability to upload any script to it. Gobuster found /upload directory, which that sounds like a good place to work with.
+
+I'll try to upload it throught the drivers directory by adding a new driver to the system and upload the script there.
 
 
 
 
-  
+
+
 
 
 
