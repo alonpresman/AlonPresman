@@ -153,8 +153,8 @@ Let's grab the exploit and try it:
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*Fxc72LELFs11WPx-AJkAog.png)
 
-I tried it but it doesn't work so i decide to read the script to understand what is all about.
-After reading it I saw a payload that relates to sql injection to bypass login page so i tried it manually on
+I tried it but it doesn't work so I decide to read the script to understand what is all about.
+After reading it I saw a payload that relates to sql injection to bypass login page so I tried it manually on
 the login page:
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*qqLF5ylLJ1Yfs9NRJYCGvg.png)
@@ -165,13 +165,17 @@ the login page:
 ```
 admin' or '1'='1'#
 
-this payload is tautology SQLi that inject code which is always true. So, the data base checks all the usernames within the
-db, and this query manipulate the db to use username without any knowledge about it can be. the "#" sign is used to "cut" the query at the point that is appeard.
+this payload is tautology SQLi that inject code which is always true.
+So, the data base checks all the usernames within the
+db, and this query manipulate the db to use username without any knowledge about it can be.
+the "#" sign is used to "cut" the query at the point that is appeard.
 
 the full query looks like:
 SELECT * FROM users where username="admin' or '1'='1'# " AND password = "";
  To summ it up:
-The db is manipulated by the query to use the first username within it and the part of the password isn't checked at all by the db cause there is "#" sign that stops the db from checking if the password is correct or not.
+The db is manipulated by the query to use the first username within it and the part
+of the password isn't checked at all by the db cause there is "#" sign that stops
+the db from checking if the password is correct or not.
 ```
 
 We got the administrator dashbord which means we can do anything we want to.
@@ -242,7 +246,7 @@ so the new backup.sh includs:
 After create it on your machine you nedd to upload it to the victim machine with python server:
 
 ```
-on your nachine, open the server with this command inside the directory that includs the backup.sh file:
+on your machine, open the server with this command inside the directory that includs the backup.sh file:
 
 python3 -m http.server
 
@@ -285,8 +289,34 @@ find / -user root -perm /4000 2>/dev/null
 ![image](https://cdn-images-1.medium.com/max/1000/1*vqnteGcIrwt54GfUy9MfoQ.png)
 
 
+There is doas binary file that can help us.
+Let's read the doas configuration file to understand if is there something helpful.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*de_my2WXS1upQLlGFRzuFQ.png)
+
+
+We can run openssl as root!
+
+Check what can we do with it on gtfobins:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*Q7q9bjpmQ0CEE1TchPe8eg.png)
+
+
+It's written there that we can read files as root so try to read root.txt flag.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*hdxWpzXW4ADuivFa97tqTg.png)
+
+root flag has been obtained!
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
 
 
 
