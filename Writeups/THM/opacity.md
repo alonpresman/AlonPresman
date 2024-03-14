@@ -97,6 +97,22 @@ While testing the web app, I started with directories scan with dirsearch:
 python3 dirsearch.py -u <machine-ip>
 ```
 
+There is an intersting directory. */cloud*
+Navigate there:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*ykpbEERdhg-i09w0aF8T1Q.png)
+
+
+Now, Let's try to get more information about the behavior with burp:
+
+
+
+
+
+
+
+
+
 
 
 
