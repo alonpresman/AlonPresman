@@ -271,7 +271,7 @@ modified it to your ip and port number.
 
 https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php
 
-third step:
+Third step:
 remove the original file from /scripts/lib/backup.inc.php
 
 ```bash
