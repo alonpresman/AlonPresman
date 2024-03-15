@@ -221,6 +221,21 @@ Grab local.txt flag.
 
 Then we need to find a way to be root.
 
+I tried to search for any cronjob within /etc/crontab but without any good news.
+Let's use pspy to monitor processes on the system.
+Upload it with the python http server.
+After the successful upload, give it execute permission.
+
+```bash
+chmod +x pspy64
+```
+
+There is cronjob that runs script.php on the machine.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*Yrs9Sky5hn4vtwyjcRDZtQ.png)
+
+
 As we can see there is a script.php file own by root and when it runs it calls to 
 another file within /lib:
 
