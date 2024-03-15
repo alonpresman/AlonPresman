@@ -211,9 +211,34 @@ ssh sysadmin@10.10.87.30
 ```
 
 enter the password and we are in.
+
 grab local.txt flag.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*0vNNZS4TzOanPZkEHrOdQA.png)
+
+Then we need to find a way to be root.
+
+As we can see there is a script.php file own by root and when it runs it calls to 
+another file within /lib:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*de31LzlghDjQ23FePAOh_Q.png)
+
+on script.php I have no permission to modiefy it, but if it uses another script, maybe can I 
+modifey lib/backup.inc.php ?
+
+```
+-rw-r--r-- 1 root     root   967 Jul  6  2022 backup.inc.php
+```
+
+I can only read it.
+
+But, I'm the owner of /lib . what if Ill copy the directory to sysadmin home directory? I can modifey /lib/backup.inc.php there, then remove the original file from the original directory, the next step will be inject a reverse shell to the copied file and the last step is to move the file back to the original directory as modified file!
+
+
+
+
+
+
 
 
 
