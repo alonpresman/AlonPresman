@@ -265,12 +265,11 @@ drwxr-xr-x 7 sysadmin sysadmin  4096 Mar 15 15:59 ..
 
 next step:
 
-Inject php reverse shell pentestmonkey backup.inc.php
+Inject php reverse shell pentestmonkey to backup.inc.php
 
 modified it to your ip and port number.
 
-
-![image](https://cdn-images-1.medium.com/max/1000/1*kqg6jUisepfvfSxPj51rOA.png)
+https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php
 
 third step:
 remove the original file from /scripts/lib/backup.inc.php
