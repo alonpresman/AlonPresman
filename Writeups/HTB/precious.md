@@ -294,7 +294,7 @@ User henry may run the following commands on precious:
     (root) NOPASSWD: /usr/bin/ruby /opt/update_dependencies.rb
 ```
 
-After cat the file I saw it needs dependencies to execute.
+After cat the file I saw it needs dependencies to be executed.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*X2VI9OMxHQnCs05ZCoPejQ.png)
 
