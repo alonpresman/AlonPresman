@@ -222,6 +222,7 @@ Options:
 
 There is reverse shell mode. Use -s flag.
 After few attempts I recognized that isn't going to work. :(
+
 Let's find another cve.
 
 https://security.snyk.io/vuln/SNYK-RUBY-PDFKIT-2869795
