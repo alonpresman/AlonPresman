@@ -1,4 +1,4 @@
-# Nibbles | HTB
+![image](https://github.com/alonpresman/AlonPresman/assets/121765218/e82d1f75-44a9-4e2d-992a-e6f793e1cc98)# Nibbles | HTB
 ### Difficulty : Easy
 -------------------------------
 
@@ -69,6 +69,24 @@ I'll try to find any intersting directory within the systen with:
 -w - the wordlist to scan the system with.
 
 While scanning, I navigated to the address within the browser. I decided to view the source code.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*byJhHlMqipaqplu6OGRR3w.png)
+
+
+It sends us to /nibbleblog/.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*bXNAX8k7NVW5eWed7Iu8nw.png)
+
+
+The previous gobuster scan didn't find any directory, but after we found the blog, let's scan another time but with the /nibbleblog/.
+
+
+
+
+
+
 
 
 
