@@ -5,7 +5,7 @@
 Let's start with nmap scan to find open ports and services within the system:
 
 ```bash
-# nmap -p- -T4 -A 10.10.10.75 -oN nibbles.nmap
+nmap -p- -T4 -A 10.10.10.75 -oN nibbles.nmap
 ```
 
 -p- scans all ports instead the 1000 common ports scan defaultivy way.
