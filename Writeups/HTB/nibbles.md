@@ -1,5 +1,5 @@
 # Nibbles | HTB
-### Difficulty : Easy
+### Difficulty Level: Easy
 -------------------------------
 
 Let's start with nmap scan to find open ports and services within the system:
