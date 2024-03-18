@@ -1,4 +1,4 @@
-![image](https://github.com/alonpresman/AlonPresman/assets/121765218/e82d1f75-44a9-4e2d-992a-e6f793e1cc98)# Nibbles | HTB
+# Nibbles | HTB
 ### Difficulty : Easy
 -------------------------------
 
