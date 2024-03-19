@@ -150,6 +150,8 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 ```
 
+Grab user.txt flag.
+
 ![image](https://cdn-images-1.medium.com/max/1000/1*QDLymSfm1yv52sq-R4ZXNg.png)
 
 There is zip file maybe there is something:
