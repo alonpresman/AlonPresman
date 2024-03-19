@@ -8,7 +8,7 @@ Nmap scan to find out services and open ports:
 nmap -p- -T4 -A 10.10.10.7 -oN beep.nmap -Pn
 ```
 
--p- scan all ports instead of 1000 common ports.
+-p-  scans all ports instead of 1000 common ports.
 
 -T4 - increases the scan's speed
 
@@ -96,7 +96,39 @@ OS and Service detection performed. Please report any incorrect results at https
 
 There are 15 open port so let's make it more clear.
 
-SSH - 22
+SSH - 22 (remote login securely).
+
+SMTP - 25 (sending email messages between servers).
+
+HTTP - 80  (transimitting web docs).
+
+POP3 - 110 (retrieve emails from servers).
+
+RPCBIND  - 111 (mediator between programs and port numbers).
+
+IMAP - 143 (enables an email client to access and manage email messages stored on a mail server).
+
+HTTPS - 443 (transmitting web docs securely).
+
+PORT 793 random port.
+
+SSL IMAP - 993 (secure imap).
+
+POP3 - 995 (the same as 110).
+
+MYSQL - 3306 (using db to manage data).
+
+SIEVE - 4190 (used for sorting, filtering, and processing email messages)
+
+PORT 4445 random port.
+
+HYLAFAX - 4459 (fax server software).
+
+ASTERIX - 5038 (Asterisk allows users to build communication applications)
+
+HTTP - 10000 (same as 80)
+
+
 
 
 
