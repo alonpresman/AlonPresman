@@ -328,9 +328,9 @@ while True:
 
 It looks like it creats a reverse shell.
 
-I tried t to run it with the variables that are needed, but it didn't work so I decide to use metasploit.
+I tried to run it with the variables that are needed, but it didn't work so I decide to use metasploit.
 
-after finding the exploit let's set:
+after setting the exploit let's set:
 
 rhost
 
