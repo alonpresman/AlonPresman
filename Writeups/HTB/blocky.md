@@ -157,7 +157,7 @@ Let's navigate to /plugins.
 
 there are 2 files.
 
-both are jar file so I used jd-gui to revese it back.
+both are jar file so I used jd-gui to reverse it back.
 
 ```bash
 jd-gui BlockyCore.jar
