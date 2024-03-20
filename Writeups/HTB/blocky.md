@@ -60,7 +60,7 @@ While browse into the web page, I could not access it so add the ip-address to t
 /etc/hosts file with:
 
 ```bash
-echo '10.10.10.37'     blocky.htb
+echo '10.10.10.37     blocky.htb' >> /etc/hosts
 ```
 
 There is a webpage under construction.
