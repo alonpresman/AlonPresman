@@ -1,4 +1,4 @@
-![image](https://github.com/alonpresman/AlonPresman/assets/121765218/63dee308-74d3-4f3b-84c6-16bbc4e10782)# Blocky | HTB
+# Blocky | HTB
 ### Difficulty Level: Easy 
 ----------------------------------
 
