@@ -151,7 +151,7 @@ I didn't know what to do at that moment so let's see if there is something in go
 After searching apache-cgi exploit, I ran into an exploit:
 
 
-![image]("https://cdn-images-1.medium.com/max/1000/1*oicGTU9ZFgui6YwoBbsOcQ.png)
+![image]("https://cdn-images-1.medium.com/max/1000/1*oicGTU9ZFgui6YwoBbsOcQ.png")
 
 
 I search it on metasploit and grab the exploit to my machine:
