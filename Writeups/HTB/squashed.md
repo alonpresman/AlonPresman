@@ -365,7 +365,7 @@ gimp screen.xwd
 
 we can display the screenshot:
 
-![image](https://cdn-images-1.medium.com/max/1000/1*mfVI6mx-LROZmE21x35kBw.png)
+![image](https://cdn-images-1.medium.com/max/1000/1*BinWfPmO1BfC0gbV_MUFqA.png)
 
 There is a password to root!
 
