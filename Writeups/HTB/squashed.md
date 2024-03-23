@@ -1,4 +1,4 @@
-![image](https://github.com/alonpresman/AlonPresman/assets/121765218/f9318782-38a1-400a-adf7-013e4a3af064)# Squashed | HTB
+# Squashed | HTB
 ### Difficulty Level: Easy
 ------------------------------------
 
