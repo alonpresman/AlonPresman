@@ -339,7 +339,7 @@ USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 ross     tty7     :0               Fri17   22:49m  1:52   0.04s /usr/libexec/gnome-session-binary --systemd --session=gnome
 ```
 
-Now we can get a display of the screen of user ross:
+Now we can get a display of the screen of user root:
 
 ```bash
 xwd -root -screen -silent -display :0 > /tmp/screen.xwd
