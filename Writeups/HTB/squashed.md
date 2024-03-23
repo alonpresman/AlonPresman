@@ -285,6 +285,8 @@ After enumerate ross directory I found an hidden file:
 X Window System (X11) to authenticate users and processes accessing the X server. 
 The exact contents of the file are binary and not meant to be human-readable.
 The file typically stores one or more authentication tokens, each associated with a specific display (X server).."
+The X Window System, commonly referred to as X11 or simply X, is a foundational technology for graphical user interfaces
+(GUIs) on Unix-like operating systems such as Linux and BSD. It provides the framework and protocols necessary for managing graphical displays and user input devices.
 
 So, this file can help us to escalate our privilliges.
 
@@ -344,7 +346,6 @@ Now we can get a display of the screen of user root:
 ```bash
 xwd -root -screen -silent -display :0 > /tmp/screen.xwd
 ```
-
 
 grab the file from the target machine to your machine:
 
