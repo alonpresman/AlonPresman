@@ -73,7 +73,7 @@ Start with directories enumeration with gobuster :
 └─# gobuster dir -u http://10.10.10.56 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
 
-This dictionary attack didn't find anythinq so I decided to try another directory:
+This dictionary attack didn't find anythinq so I decided to try another dictionary:
 
 ```bash
 └─# gobuster dir -u http://shocker.htb -w /usr/share/wordlists/dirb/big.txt 
