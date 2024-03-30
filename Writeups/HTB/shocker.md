@@ -144,7 +144,7 @@ Just an uptime test script
  15:28:38 up  5:28,  0 users,  load average: 0.00, 0.00, 0.00
 ```
 
-something special.
+nothing special.
 
 I didn't know what to do at that moment so let's see if there is something in google.
 
