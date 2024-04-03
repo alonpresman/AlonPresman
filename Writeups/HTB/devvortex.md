@@ -677,11 +677,12 @@ logan@devvortex:/var/www/dev.devvortex.htb$
 and we are logan.
 
 grab the user.txt flag.
-
+```bash
 logan@devvortex:/var/www/dev.devvortex.htb$ cat /home/logan/user.txt                                                                   
 cat /home/logan/user.txt                                                                                                               
 ********************************                                                                                                       
 logan@devvortex:/var/www/dev.devvortex.htb$ 
+```
 
 Let's try to escalate our privilliges with:
 
