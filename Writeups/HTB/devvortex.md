@@ -129,7 +129,7 @@ navigate there:
 
 Nothing there.
 
-Find directories within the system with:
+Find directories within the system with gobuster, and now the scan will be with the subdomain:
 
 ```bash
 ===============================================================
@@ -163,7 +163,7 @@ Starting gobuster in directory enumeration mode
 /administrator        (Status: 301) [Size: 178] [--> http://dev.devvortex.htb/administrator/]
 ```
 
-The scan isn't over yet but there is /administrator directory that looks good to us.
+The scan isn't over yet but there is /administrator directory, looks good to us.
 
 browse there:
 
