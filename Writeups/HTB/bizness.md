@@ -8,7 +8,7 @@ add bizness.htb to your /etc/hosts file with:
 echo '<machine-ip>    bizness.htb' >> /etc/hosts
 ```
 
-Start with nmap scan to discover open ports, services and versions:
+Start with nmap scan to discover open ports and services:
 
 ```
 └─# nmap -T4 10.10.11.252 -oN bizness.nmap
