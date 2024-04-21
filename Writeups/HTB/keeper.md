@@ -57,7 +57,7 @@ there is another subdoamin, add it to the file.
 
 there is login page:
 
-![image](blob:https://medium.com/695871d1-acf1-404a-b7a4-364a6ec63ee0)
+![image](https://miro.medium.com/v2/resize:fit:828/format:webp/1*iNdnfzvnlosEiroyw-CCyg.png)
 
 
 check for default credentials:
